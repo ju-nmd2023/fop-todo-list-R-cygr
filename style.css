@@ -1,14 +1,16 @@
 body {
     background: pink;
-    text-align: center;
+   
 
-h2 {
+.todo-list {
     background: rgb(255, 255, 255);
     margin:100px;
+    text-align:center;
     padding: 120px;
     border-radius: 30px;
     color: grey;
-    size: 30px;
+    size: 50px;
+
     
 
 
