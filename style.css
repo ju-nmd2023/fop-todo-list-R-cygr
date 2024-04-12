@@ -1,5 +1,5 @@
 body {
-    background: rgb(192, 141, 150);
+    background-image:url(IMG/flowers.jpg);
    
 
 .todo-list {
@@ -10,6 +10,8 @@ body {
     border-radius: 30px;
     color: grey;
     size: 50px;
+
+
  
 
 
