@@ -11,7 +11,34 @@ body {
     color: grey;
     size: 50px;
 
+.row {
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    background: #f5f5f5;
+    border-radius:30px;
+    padding-left: 30px;
+    margin:5px;
+}
 
+input {
+    flex:1;
+    border:none;
+    outline:none;
+    background:transparent;
+    padding:10px;
+}
+
+button{
+    border:none;
+    outline:none;
+    padding:16px 50px;
+    background:#AA336A;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    border-radius:40px;
+}
  
 
 
