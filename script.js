@@ -1,41 +1,61 @@
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
 
-
-///HELO FROM MY BROTHER///
 function addTask() {
-    if (inputBox.value === '') {
+    if (inputBox.value.trim() === '') {
         alert("Stop procrastinating!");
     } else {
         let li = document.createElement("li");
-        li.innerHTML = inputBox.value;
-        listContainer.appendChild(li);
-        let span = document.createElement("span");
-        span.innerHTML = "\u00d7";
-        li.appendChild(span);
-    }
+        li.textContent = inputBox.value.trim();
 
-    inputBox.value = "";
-    saveData();
+        let span = document.createElement("span");
+        span.textContent = "\u00d7"; // Unicode for the cross symbol
+        li.appendChild(span);
+
+        listContainer.appendChild(li);
+        inputBox.value = ""; // Clear the input box
+        saveData(); // Save the updated list to local storage
+    }
 }
 
 listContainer.addEventListener("click", function(e) {
     if (e.target.tagName === "LI") {
         e.target.classList.toggle("checked");
-        saveData();
-
+        saveData(); // Save the updated list to local storage
     } else if (e.target.tagName === "SPAN") {
         e.target.parentElement.remove();
-        saveData();
+        saveData(); // Save the updated list to local storage
     }
 }, false);
-
-function saveData(){
-    localStorage.setItem("data", listContainer.innerHTML);
+//THE FOLLOWING WERE HELP FROM MY BROTHER ALONG WITH THE PRESENTATION SLIDES//
+function saveData() {
+    const tasks = [];
+    listContainer.querySelectorAll("li").forEach(item => {
+        tasks.push({
+            text: item.firstChild.textContent, //  task text
+            checked: item.classList.contains("checked") // Whether the task is done
+        });
+    });
+    localStorage.setItem("tasks", JSON.stringify(tasks)); // Save tasks as JSON in local storage
 }
 
-function showTask(){
-    listContainer.innerHTML = localStorage.getItem("data");
-}
-showTask();
+function showTask() {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.forEach(task => {
+        let li = document.createElement("li");
+        li.textContent = task.text;
 
+        if (task.checked) {
+            li.classList.add("checked");
+        }
+
+        let span = document.createElement("span");
+        span.textContent = "\u00d7";
+        li.appendChild(span);
+
+        listContainer.appendChild(li);
+    });
+}
+
+// Load tasks when the page is loaded
+document.addEventListener("DOMContentLoaded", showTask);
