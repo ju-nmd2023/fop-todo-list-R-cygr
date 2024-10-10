@@ -3,32 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My to-do list</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-
-    <link rel="stylesheet" href="style.css">  
-    
-    // //GOT HELP FROM///7  https://www.youtube.com/watch?v=G0jO8kUrg-I&t=1127s///  /////
-    
+    <title>To-Do List - Cute Paper Style</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="todo-app">
-            <h2>My todo list <img src="images/pencil.webp"></h2>
+            <h2>To Do</h2>
             <div class="row">
-                <input type="text" id="input-box" placeholder="add your text">
+                <input type="text" id="input-box" placeholder="Add your task...">
                 <button onclick="addTask()">Add</button>
             </div>
-
             <ul id="list-container">
-               <!--- <li class="checked">Task 1</li>
-                <li>Task 2</li>
-                <li>Task 3</li> -->
+                <!-- Tasks will appear here -->
             </ul>
-        </div>
+       
     </div>
     <script src="script.js"></script>
-    <script src="p5.min.js"></script>
 </body>
 </html>
-
