@@ -1,61 +1,73 @@
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
 
+
+//THE FOLLOWING CODE IS MODIFIED HELP FROM CHAT GBT AN SOME fROM THE PRESENTATION SLIDES
+// Add a new task to the list
 function addTask() {
-    if (inputBox.value.trim() === '') {
+    const taskText = inputBox.value.trim();
+
+    if (taskText === '') {
         alert("Stop procrastinating!");
-    } else {
-        let li = document.createElement("li");
-        li.textContent = inputBox.value.trim();
-
-        let span = document.createElement("span");
-        span.textContent = "\u00d7"; // Unicode for the cross symbol
-        li.appendChild(span);
-
-        listContainer.appendChild(li);
-        inputBox.value = ""; // Clear the input box
-        saveData(); // Save the updated list to local storage
+        return;
     }
+
+    const taskElement = createTaskElement(taskText);
+    listContainer.appendChild(taskElement);
+    inputBox.value = ""; // Clear input field
+    updateLocalStorage();
 }
 
-listContainer.addEventListener("click", function(e) {
-    if (e.target.tagName === "LI") {
-        e.target.classList.toggle("checked");
-        saveData(); // Save the updated list to local storage
-    } else if (e.target.tagName === "SPAN") {
-        e.target.parentElement.remove();
-        saveData(); // Save the updated list to local storage
-    }
-}, false);
-//THE FOLLOWING WERE HELP FROM MY BROTHER ALONG WITH THE PRESENTATION SLIDES//
-function saveData() {
-    const tasks = [];
-    listContainer.querySelectorAll("li").forEach(item => {
-        tasks.push({
-            text: item.firstChild.textContent, //  task text
-            checked: item.classList.contains("checked") // Whether the task is done
-        });
-    });
-    localStorage.setItem("tasks", JSON.stringify(tasks)); // Save tasks as JSON in local storage
-}
+// Create a new task element with the given text
+function createTaskElement(text) {
+    const li = document.createElement("li");
+    li.textContent = text;
 
-function showTask() {
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    tasks.forEach(task => {
-        let li = document.createElement("li");
-        li.textContent = task.text;
+    const deleteButton = document.createElement("span");
+    deleteButton.textContent = "\u00d7"; // Cross symbol
+    li.appendChild(deleteButton);
 
-        if (task.checked) {
-            li.classList.add("checked");
+    // Toggle task as done when clicked
+    li.addEventListener("click", (e) => {
+        if (e.target === li) {
+            li.classList.toggle("checked");
+            updateLocalStorage();
         }
+    });
 
-        let span = document.createElement("span");
-        span.textContent = "\u00d7";
-        li.appendChild(span);
+    // Delete the task when the delete button is clicked
+    deleteButton.addEventListener("click", (e) => {
+        li.remove();
+        updateLocalStorage();
+    });
 
-        listContainer.appendChild(li);
+    return li;
+}
+
+// Save tasks to local storage
+function updateLocalStorage() {
+    const tasks = Array.from(listContainer.querySelectorAll("li")).map((task) => {
+        return {
+            text: task.firstChild.textContent,
+            checked: task.classList.contains("checked"),
+        };
+    });
+
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// Load tasks from local storage and render them
+function loadTasks() {
+    const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    storedTasks.forEach((task) => {
+        const taskElement = createTaskElement(task.text);
+        if (task.checked) {
+            taskElement.classList.add("checked");
+        }
+        listContainer.appendChild(taskElement);
     });
 }
 
 // Load tasks when the page is loaded
-document.addEventListener("DOMContentLoaded", showTask);
+document.addEventListener("DOMContentLoaded", loadTasks);

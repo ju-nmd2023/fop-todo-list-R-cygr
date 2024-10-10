@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: #dad1a6; /* Soft background */
+    background-color: #dad1a6; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,7 +17,7 @@ body {
     background-color: #ffffff;
     width: 350px;
     padding: 20px;
-    border-radius: 35px;
+    border-radius: 0px;
     position: relative;
 }
 
