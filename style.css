@@ -27,7 +27,7 @@
 }
 
 .todo-app h2 {
-    color: #b4746c;
+    color: #2e0b06;
     display:flex;
     align-items:center;
     margin-bottom:20px;
@@ -60,7 +60,7 @@ button{
     border:none;
     outline:none;
     padding:16px 50px;
-    background:#df6e5f;
+    background:#2b0a06;
     color:#fff;
     font-size:16px;
     cursor:pointer;
