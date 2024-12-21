@@ -2,7 +2,8 @@ const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
 
 
-//THE FOLLOWING CODE IS MODIFIED HELP FROM CHAT GBT AN SOME fROM THE PRESENTATION SLIDES
+//THE FOLLOWING CODE IS MODIFIED HELP FROM CHAT GBT AN SOME fROM THE PRESENTATION SLIDES PLUS INITIAL HELP FROM MY BROTHER
+https://chatgpt.com/share/6766cf70-92bc-8005-9b78-1dc189a19e62
 // Add a new task to the list
 function addTask() {
     const taskText = inputBox.value.trim();
