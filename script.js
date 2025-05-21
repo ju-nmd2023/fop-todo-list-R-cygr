@@ -1,74 +1,40 @@
-const inputBox = document.getElementById("input-box");
-const listContainer = document.getElementById("list-container");
+const toDoBtn = document.getElementById('addTaskBtn');
+const toDoList = document.getElementById('taskList');
+const taskInput = document.getElementById('taskInput');
 
+///event listeners
+//toDoBtn.addEventListener('click', addToDo);//
+//toDoList.addEventListener('click', deletecheck);//
 
-//THE FOLLOWING CODE IS MODIFIED HELP FROM CHAT GBT AN SOME fROM THE PRESENTATION SLIDES PLUS INITIAL HELP FROM MY BROTHER
-https://chatgpt.com/share/6766cf70-92bc-8005-9b78-1dc189a19e62
-// Add a new task to the list
-function addTask() {
-    const taskText = inputBox.value.trim();
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-    if (taskText === '') {
-        alert("Stop procrastinating!");
-        return;
-    }
+showasks();
 
-    const taskElement = createTaskElement(taskText);
-    listContainer.appendChild(taskElement);
-    inputBox.value = ""; // Clear input field
-    updateLocalStorage();
+todoForm.addEventListener('submit', function(event) {
+  event.preventDefault();
+  const newTask = todoInput.value;
+
+  if (newTask === '') {
+      alert('Please enter a task!');
+      return;
+  }
+
+   todoInput.value = ''; // Clear the input field after adding a task
+});
+
+function addTask(task) {
+  const listItem = document.createElement('li');
+  listItem.textContent = task;
+
+  // Additional functionality to be added here
+
+  todoList.appendChild(listItem);
 }
 
-// Create a new task element with the given text
-function createTaskElement(text) {
-    const li = document.createElement("li");
-    li.textContent = text;
+todoForm.addEventListener('submit', function(event) {
+  // Existing code
 
-    const deleteButton = document.createElement("span");
-    deleteButton.textContent = "\u00d7"; // Cross symbol
-    li.appendChild(deleteButton);
+  addTask(newTask); // Add the new task
+});
 
-    // Toggle task as done when clicked
-    li.addEventListener("click", (e) => {
-        if (e.target === li) {
-            li.classList.toggle("checked");
-            updateLocalStorage();
-        }
-    });
 
-    // Delete the task when the delete button is clicked
-    deleteButton.addEventListener("click", (e) => {
-        li.remove();
-        updateLocalStorage();
-    });
-
-    return li;
-}
-
-// Save tasks to local storage
-function updateLocalStorage() {
-    const tasks = Array.from(listContainer.querySelectorAll("li")).map((task) => {
-        return {
-            text: task.firstChild.textContent,
-            checked: task.classList.contains("checked"),
-        };
-    });
-
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-// Load tasks from local storage and render them
-function loadTasks() {
-    const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-    storedTasks.forEach((task) => {
-        const taskElement = createTaskElement(task.text);
-        if (task.checked) {
-            taskElement.classList.add("checked");
-        }
-        listContainer.appendChild(taskElement);
-    });
-}
-
-// Load tasks when the page is loaded
-document.addEventListener("DOMContentLoaded", loadTasks);

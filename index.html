@@ -3,22 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List - Cute Paper Style</title>
-    <link rel="stylesheet" href="style.css">
+    <title>My to-do list</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <div class="container">
-        <div class="todo-app">
-            <h2>To Do</h2>
-            <div class="row">
-                <input type="text" id="input-box" placeholder="Add your task...">
-                <button onclick="addTask()">Add</button>
-            </div>
-            <ul id="list-container">
-                <!-- Tasks will appear here -->
-            </ul>
-       
+    <div class="todo-list">
+        <h1>My todo-list</h1>
+        <div class="input-group">
+            <input type="text" id="taskInput" placeholder="Enter a new task"/>
+            <button id="addTaskBtn">Add</button>
+        </div>
+        <ul id="taskList"></ul>
     </div>
-    <script src="script.js"></script>
+    <script scr="script.js"></script>
+    
 </body>
 </html>
