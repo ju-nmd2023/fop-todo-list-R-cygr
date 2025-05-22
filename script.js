@@ -1,74 +1,73 @@
-const inputBox = document.getElementById("input-box");
-const listContainer = document.getElementById("list-container");
+const toDoBtn = document.getElementById('addTaskBtn');
+const toDoList = document.getElementById('taskList');
+const taskInput = document.getElementById('taskInput');
 
 
-//THE FOLLOWING CODE IS MODIFIED HELP FROM CHAT GBT AN SOME fROM THE PRESENTATION SLIDES PLUS INITIAL HELP FROM MY BROTHER
-https://chatgpt.com/share/6766cf70-92bc-8005-9b78-1dc189a19e62
-// Add a new task to the list
-function addTask() {
-    const taskText = inputBox.value.trim();
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-    if (taskText === '') {
-        alert("Stop procrastinating!");
-        return;
-    }
+showTasks();
 
-    const taskElement = createTaskElement(taskText);
-    listContainer.appendChild(taskElement);
-    inputBox.value = ""; // Clear input field
-    updateLocalStorage();
+//  Add task 
+toDoBtn.addEventListener('click', function () {
+  const newTaskText = taskInput.value.trim();
+
+  if (newTaskText === '') {
+    alert('Please enter a task!');
+    return;
+  }
+
+  // Create a new task object. These three lines were advised from my brother//
+  const newTask = {
+    text: newTaskText,
+    done: false
+  };
+
+  tasks.push(newTask);
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+  taskInput.value = ''; 
+  showTasks();
+}); 
+
+
+//  Function to display a single task --> some of the following lines were help from my brother 
+function addTask(task, index) {
+  const listItem = document.createElement('li');
+
+  const checkBox = document.createElement('input');
+  checkBox.type = 'checkbox';
+  checkBox.checked = task.done;
+  checkBox.addEventListener('change', function () {
+    tasks[index].done = checkBox.checked;
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    showTasks();
+  });
+
+  const taskText = document.createElement('span');
+  taskText.textContent = task.text;
+  if (task.done) {
+    taskText.style.textDecoration = 'line-through';
+    taskText.style.color = 'green';
+  }
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.textContent = 'delete';
+  deleteBtn.style.marginLeft = '10px';
+  deleteBtn.addEventListener('click', function () {
+    tasks.splice(index, 1);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    showTasks();
+  });
+
+  listItem.appendChild(checkBox);
+  listItem.appendChild(taskText);
+  listItem.appendChild(deleteBtn);
+  toDoList.appendChild(listItem);
 }
 
-// Create a new task element with the given text
-function createTaskElement(text) {
-    const li = document.createElement("li");
-    li.textContent = text;
-
-    const deleteButton = document.createElement("span");
-    deleteButton.textContent = "\u00d7"; // Cross symbol
-    li.appendChild(deleteButton);
-
-    // Toggle task as done when clicked
-    li.addEventListener("click", (e) => {
-        if (e.target === li) {
-            li.classList.toggle("checked");
-            updateLocalStorage();
-        }
-    });
-
-    // Delete the task when the delete button is clicked
-    deleteButton.addEventListener("click", (e) => {
-        li.remove();
-        updateLocalStorage();
-    });
-
-    return li;
+// Function to render all tasks
+function showTasks() {
+  toDoList.innerHTML = '';
+  tasks.forEach((task, index) => {
+    addTask(task, index);
+  });
 }
-
-// Save tasks to local storage
-function updateLocalStorage() {
-    const tasks = Array.from(listContainer.querySelectorAll("li")).map((task) => {
-        return {
-            text: task.firstChild.textContent,
-            checked: task.classList.contains("checked"),
-        };
-    });
-
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-// Load tasks from local storage and render them
-function loadTasks() {
-    const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-    storedTasks.forEach((task) => {
-        const taskElement = createTaskElement(task.text);
-        if (task.checked) {
-            taskElement.classList.add("checked");
-        }
-        listContainer.appendChild(taskElement);
-    });
-}
-
-// Load tasks when the page is loaded
-document.addEventListener("DOMContentLoaded", loadTasks);
