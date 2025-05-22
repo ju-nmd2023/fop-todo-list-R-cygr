@@ -1,45 +1,90 @@
+/* Page bg and font */
 body {
-    font-family: 'Arial,sans serif';
-    background: #f4f4f4;
-    display: flex;
-    justify-content: 'center';
-    padding: 50px;
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding-top: 40px;
 }
 
-.todo-list{
-background: white;
-padding:30px;
-border-radius: 10px;
-width:100%
+/* the main container */
+.todo-list {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.input-group{
-    display:flex;
-    gap:10px;
-    margin-bottom: 20px;
+/* title */
+.todo-list h1 {
+  margin-bottom: 15px;
+  font-size: 22px;
+  text-align: center;
+}
+
+/* input and button group */
+.input-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+#taskInput {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 #addTaskBtn {
-    padding: 10px 15px;
-    cursor:pointer;
+  padding: 8px 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
-li{
-    display:flex;
-    justify-content: space-between;
-    padding:10px 0;
-    border-bottom: 1px;
-
+#addTaskBtn:hover {
+  background-color: #449e48;
 }
 
-li.done span{
-    text-decoration: line-through;
-    color:gray;
+#taskList {
+  list-style: none;
 }
 
-buttom.delete{
-    background:none;
-    border:none;
-    color:red;
-    cursor:pointer;
+#taskList li {
+  background: #fafafa;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#taskList li span {
+  flex: 1;
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+
+ /*delete button*/
+#taskList li button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #c00;
+}
+
+#taskList li button:hover {
+  color: #900;
 }

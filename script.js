@@ -2,39 +2,72 @@ const toDoBtn = document.getElementById('addTaskBtn');
 const toDoList = document.getElementById('taskList');
 const taskInput = document.getElementById('taskInput');
 
-///event listeners
-//toDoBtn.addEventListener('click', addToDo);//
-//toDoList.addEventListener('click', deletecheck);//
 
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-showasks();
+showTasks();
 
-todoForm.addEventListener('submit', function(event) {
-  event.preventDefault();
-  const newTask = todoInput.value;
+//  Add task 
+toDoBtn.addEventListener('click', function () {
+  const newTaskText = taskInput.value.trim();
 
-  if (newTask === '') {
-      alert('Please enter a task!');
-      return;
+  if (newTaskText === '') {
+    alert('Please enter a task!');
+    return;
   }
 
-   todoInput.value = ''; // Clear the input field after adding a task
-});
+  // Create a new task object//
+  const newTask = {
+    text: newTaskText,
+    done: false
+  };
 
-function addTask(task) {
+  tasks.push(newTask);
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+  taskInput.value = ''; 
+  showTasks();
+}); 
+
+
+//  Function to display a single task --> some of the following lines were help from my brother 
+function addTask(task, index) {
   const listItem = document.createElement('li');
-  listItem.textContent = task;
 
-  // Additional functionality to be added here
+  const checkBox = document.createElement('input');
+  checkBox.type = 'checkbox';
+  checkBox.checked = task.done;
+  checkBox.addEventListener('change', function () {
+    tasks[index].done = checkBox.checked;
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    showTasks();
+  });
 
-  todoList.appendChild(listItem);
+  const taskText = document.createElement('span');
+  taskText.textContent = task.text;
+  if (task.done) {
+    taskText.style.textDecoration = 'line-through';
+    taskText.style.color = 'green';
+  }
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.textContent = 'delete';
+  deleteBtn.style.marginLeft = '10px';
+  deleteBtn.addEventListener('click', function () {
+    tasks.splice(index, 1);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    showTasks();
+  });
+
+  listItem.appendChild(checkBox);
+  listItem.appendChild(taskText);
+  listItem.appendChild(deleteBtn);
+  toDoList.appendChild(listItem);
 }
 
-todoForm.addEventListener('submit', function(event) {
-  // Existing code
-
-  addTask(newTask); // Add the new task
-});
-
-
+// Function to render all tasks
+function showTasks() {
+  toDoList.innerHTML = '';
+  tasks.forEach((task, index) => {
+    addTask(task, index);
+  });
+}
