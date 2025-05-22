@@ -16,7 +16,11 @@ toDoBtn.addEventListener('click', function () {
     return;
   }
 
+<<<<<<< HEAD
   // Create a new task object//
+=======
+  // Create a new task object. These three lines were advised from my brother//
+>>>>>>> 2b40ba3523afc04d27b618977ead9ace4a7a12ff
   const newTask = {
     text: newTaskText,
     done: false

@@ -85,6 +85,10 @@ body {
   color: #c00;
 }
 
-#taskList li button:hover {
-  color: #900;
+
+
+li.checked {
+    text-decoration: line-through; /* This will strike through the text */
+    color: rgb(133, 12, 12); /* Optional: change text color for checked tasks */
 }
+
