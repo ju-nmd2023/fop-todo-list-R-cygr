@@ -88,7 +88,10 @@ body {
 
 
 li.checked {
-    text-decoration: line-through; /* This will strike through the text */
-    color: rgb(133, 12, 12); /* Optional: change text color for checked tasks */
+    text-decoration: line-through; 
+    color: rgb(133, 12, 12); 
 }
+
+
+
 
